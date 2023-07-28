@@ -1,0 +1,77 @@
+{% extends "layout.html"%}
+
+{% block content %}
+<div class="container">
+  <table class="table tabla">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Peso(g)</th>
+        <th scope="col">Talla(cm)</th>
+        <th scope="col">Imc</th>
+        <th scope="col">Estado</th>
+        <th scope="col" colspan="2"></th>
+      </tr>
+    </thead>
+        <tr>
+          <form method='POST'>
+            {% csrf_token %}
+            <th></th>
+            <td><input type="text" id="nombre" name="nombre" placeholder="Nombre" class="form-control" required></td>
+            <td><input type="number" id="peso" name="peso" placeholder="Peso (gramos)" class="form-control" required></td>
+            <td><input type="number" id="talla" name="talla" placeholder="Talla (centímetros)" class="form-control" required></td>
+            <td></td>
+            <td></td>
+            <td colspan="2"><input type="submit" class="btn btn-success" value="Agregar"></td>
+          </form>
+        </tr>
+        {% for registro in listado %}
+            <tr>
+                <th scope="row">{{ registro.id }}</th>
+                <td>{{ registro.nombre }}</td>
+                <td>{{ registro.peso }}</td>
+                <td>{{ registro.talla }}</td>
+                <td>{{ registro.imc }}</td>
+                <td><b>{{ registro.estado }}</b></td>
+                <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target='#myModal' onClick="abreModal({{ registro.id }},'{{ registro.nombre }}',{{ registro.peso }},{{ registro.talla }})">Editar </button> </td>
+                <td><a href="/elimina/{{ registro.id }}"><button type="button" class="btn btn-danger">Eliminar</button></a></td>
+            </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Persona</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method='POST' action='/modifica/'>
+          {% csrf_token %}
+            <input type="hidden"  id="idForm" name="idForm">
+
+            <label for="nombreForm" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombreForm" name="nombreForm" required>
+          
+            <label for="pesoForm" class="form-label">Peso (gramos)</label>
+            <input type="number" class="form-control" id="pesoForm" name="pesoForm" required>
+
+            <label for="tallaForm" class="form-label">Talla (centímetros)</label>
+            <input type="number" class="form-control" id="tallaForm" name="tallaForm" required>
+                                  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <input type="submit" class="btn btn-success" value='Guardar'>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

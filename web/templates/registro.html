@@ -1,0 +1,13 @@
+{% extends "layout.html"%}
+
+{% block content %}
+
+<h2>
+Se ingresaron {{ listado }} registros desde el csv :
+</h2>
+<ul>
+{% for registro in registros %}
+    <li>{{ registro }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
