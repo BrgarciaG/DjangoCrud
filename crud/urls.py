@@ -2,6 +2,8 @@
 from django.contrib import admin
 from django.urls import path
 from web import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,3 +14,5 @@ urlpatterns = [
     path('exportaCSV/', views.exportaCSV, name="exportaCSV"),
     path('exportaExcel/', views.exportaExcel, name="exportaExcel"),    
 ]
+
+urlpatterns +=staticfiles_urlpatterns()
